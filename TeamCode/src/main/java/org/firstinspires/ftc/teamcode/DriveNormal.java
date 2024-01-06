@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class DriveNormal extends LinearOpMode {
 
-    private DcMotorEx FR, FL, BL, BR;
+    private DcMotorEx FR, FL, BL, BR, hang;
     private double FRP, FLP, BLP, BRP;
     private CRServo drone;
 
@@ -21,7 +21,9 @@ public class DriveNormal extends LinearOpMode {
         BR = hardwareMap.get(DcMotorEx.class, "BR");
         FL = hardwareMap.get(DcMotorEx.class, "FL");
         FR = hardwareMap.get(DcMotorEx.class, "FR");
+        hang = hardwareMap.get(DcMotorEx.class,"hang");
         drone = hardwareMap.get(CRServo.class, "drone");
+
         FR.setDirection(DcMotorEx.Direction.FORWARD);
         BR.setDirection(DcMotorEx.Direction.FORWARD);
         double speedDivide = 1;
@@ -33,17 +35,25 @@ public class DriveNormal extends LinearOpMode {
         while(opModeIsActive()) {
             double y = 0.8*(Math.pow(-gamepad1.left_stick_y,2))*Math.signum(-gamepad1.left_stick_y); //y value is inverted
             double x = 0.8*(Math.pow(gamepad1.left_stick_x, 2))*Math.signum(gamepad1.left_stick_x);
-            double rx = -gamepad1.right_stick_x;
+            double rx = gamepad1.right_stick_x;
             if (gamepad1.left_bumper){
                 speedDivide = 4;
             } else {
-                speedDivide = 2;
+                speedDivide = 1.3;
                 //speedDivide = 1;
             }
-            if (gamepad1.a){
+            if (gamepad1.x){
                 drone.setPower(0.3);
                 sleep(100);
                 drone.setPower(0);
+            }
+
+            if(gamepad1.left_trigger>0.2){
+                hang.setPower(0.75);
+            } else if (gamepad1.right_trigger>0.2){
+                hang.setPower(-0.5);
+            } else{
+                hang.setPower(0);
             }
             double frontLeftSpd=(y+x+rx)/speedDivide; //y+x+rx
             double frontRightSpd=(y-x-rx)/speedDivide;
@@ -66,7 +76,11 @@ public class DriveNormal extends LinearOpMode {
             FL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             BR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             FR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+            //telemetry.addData("state",drone.getPower());
+            //telemetry.addData("a",gamepad1.a);
         }
+
     }
 
 }
