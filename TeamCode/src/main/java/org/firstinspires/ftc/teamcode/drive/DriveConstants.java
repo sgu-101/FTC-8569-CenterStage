@@ -22,7 +22,7 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 28;
+    public static final double TICKS_PER_REV = 28*13.7;
     public static final double MAX_RPM = 435;
 
     /*
@@ -33,9 +33,9 @@ public class DriveConstants {
      * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
      * from DriveVelocityPIDTuner.
      */
-    public static final boolean RUN_USING_ENCODER = true;
+    public static final boolean RUN_USING_ENCODER = false;
     public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
-      getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
     /*
      * These are physical constants that can be determined from your robot (including the track
@@ -55,9 +55,9 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 1.0 / rpmToVelocity(MAX_RPM);
-    public static double kA = 0;
-    public static double kStatic = 0;
+    public static double kV = 0.00101911;
+    public static double kA = 0.00009;
+    public static double kStatic = 0.06;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -74,11 +74,11 @@ public class DriveConstants {
      * This is only 85% of the theoretical maximum velocity of the bot, following the recommendation above.
      * This is capped at 85% because there are a number of variables that will prevent your bot from actually
      * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiencies, etc.
-     * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically 
+     * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically
      * max velocity. The theoretically maximum velocity is 1179.38143392518 in/s.
      * Just make sure that your bot can actually reach this maximum velocity. Path following will be detrimentally
      * affected if it is aiming for a velocity not actually possible.
-     * 
+     *
      * The maximum acceleration is somewhat arbitrary and it is recommended that you tweak this yourself based on
      * actual testing. Just set it at a reasonable value and keep increasing until your path following starts
      * to degrade. As of now, it simply mirrors the velocity, resulting in 1002.474218836403 in/s/s
@@ -91,13 +91,13 @@ public class DriveConstants {
      * velocity (85% of max velocity) exceeding 90in/s.
      * (Your recommended velocity was 1002.474218836403in/s)
      * This is simply insanely fast for an FTC bot and chances are your bot cannot properly reach these speeds.
-     * 
+     *
      * Just to be safe, LearnRoadRunner.com has arbitrarily limited your velocity to 90in/s.
      * You are free to increase it yourself. If you do run into issues, please lower the maximum velocity.
-     * 
+     *
      * A documented case of a similar error which served as an impetus for this reasoning can be found here:
      * https://github.com/acmerobotics/road-runner-quickstart/issues/91
-     
+
      */
     public static double MAX_VEL = 90;
     public static double MAX_ACCEL = 90;
@@ -114,7 +114,7 @@ public class DriveConstants {
     }
 
     public static double getMotorVelocityF(double ticksPerSecond) {
-      // see https://docs.google.com/document/d/1tyWrXDfMidwYyP_5H4mZyVgaEswhOC35gvdmP-V-5hA/edit#heading=h.61g9ixenznbx
-      return 32767 / ticksPerSecond;
+        // see https://docs.google.com/document/d/1tyWrXDfMidwYyP_5H4mZyVgaEswhOC35gvdmP-V-5hA/edit#heading=h.61g9ixenznbx
+        return 32767 / ticksPerSecond;
     }
 }
