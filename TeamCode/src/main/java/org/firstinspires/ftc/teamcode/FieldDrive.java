@@ -21,7 +21,6 @@ public class FieldDrive extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("BL");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("FR");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("BR");
-        CRServo drone = hardwareMap.get(CRServo.class,"drone");
         /*
         DcMotor RSlides = hardwareMap.dcMotor.get("RSlides");
         DcMotor LSlides = hardwareMap.dcMotor.get("LSlides");
@@ -88,7 +87,7 @@ public class FieldDrive extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            double speed = 0.5;
+            double speed = 0.66;
 
             frontLeftMotor.setPower(frontLeftPower*speed);
             backLeftMotor.setPower(backLeftPower*speed);
