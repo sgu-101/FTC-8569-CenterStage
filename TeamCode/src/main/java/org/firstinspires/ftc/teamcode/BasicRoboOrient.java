@@ -59,7 +59,7 @@ public class BasicRoboOrient extends LinearOpMode {
 
             FL.setPower(FLP);
             FR.setPower(FRP);
-            BL.setPower(BLP*1.2);
+            BL.setPower(BLP);
             BR.setPower(BRP);
             BL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             FL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
