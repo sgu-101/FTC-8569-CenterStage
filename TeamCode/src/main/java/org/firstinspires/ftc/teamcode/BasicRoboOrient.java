@@ -66,8 +66,18 @@ public class BasicRoboOrient extends LinearOpMode {
             BR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             FR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-            //telemetry.addData("state",drone.getPower());
-            //telemetry.addData("a",gamepad1.a);
+            telemetry.addData("FLP",FLP);
+            telemetry.addData("FRP",FRP);
+            telemetry.addData("BLP",BLP);
+            telemetry.addData("BRP",BRP);
+            telemetry.addData("gamepadx",gamepad1.left_stick_x);
+            telemetry.addData("x",x);
+            telemetry.addData("gamepady",gamepad1.left_stick_y);
+            telemetry.addData("y",y);
+            telemetry.addData("gamepadrx",gamepad1.right_stick_x);
+            telemetry.addData("rx",rx);
+
+            telemetry.update();
         }
 
     }

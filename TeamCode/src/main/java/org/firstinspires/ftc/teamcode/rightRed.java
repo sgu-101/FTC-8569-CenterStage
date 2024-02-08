@@ -29,6 +29,8 @@ public class rightRed extends LinearOpMode {
     OpenCvCamera cam = null;
     boolean done = false;
 
+    private int width= 640,height = 480;
+
     @Override
     public void runOpMode(){
         backLeft = hardwareMap.get(DcMotor.class, "BL");
@@ -59,7 +61,7 @@ public class rightRed extends LinearOpMode {
             public void onOpened()
             {
                 telemetry.addData("correct", 1);
-                cam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                cam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
             @Override
             public void onError(int errorCode)
@@ -208,9 +210,9 @@ public class rightRed extends LinearOpMode {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
 
 
-            Rect leftRect = new Rect(1,1,106,239);
-            Rect midRect = new Rect(107,1,106,239);
-            Rect rightRect = new Rect(214,1,105,239);
+            Rect leftRect = new Rect(1,1,width/3,height-1);
+            Rect midRect = new Rect(2+(width/3),1,width/3,height-1);
+            Rect rightRect = new Rect(3+(2*width/3),1,width-(4+(2*width/3)),height-1);
 
             input.copyTo(output);
             Imgproc.rectangle(output,leftRect,rectColor,2);

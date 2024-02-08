@@ -12,11 +12,11 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp
 public class DriveNormal extends LinearOpMode {
 
-    private DcMotorEx FR, FL, BL, BR, Larm, Rarm;
+    private DcMotorEx FR, FL, BL, BR;
     private double FRP, FLP, BLP, BRP;
     private Servo claw, claw2, drone;
 
-    private CRServo arm, arm2, wrist;
+    private CRServo wrist, Larm, Rarm;
     double MIN_POSITION = 0, MAX_POSITION = 1;
     double contPower;
     @Override
@@ -25,16 +25,14 @@ public class DriveNormal extends LinearOpMode {
         BR = hardwareMap.get(DcMotorEx.class, "BR");
         FL = hardwareMap.get(DcMotorEx.class, "FL");
         FR = hardwareMap.get(DcMotorEx.class, "FR");
-        Larm = hardwareMap.get(DcMotorEx.class, "Larm");
-        Rarm = hardwareMap.get(DcMotorEx.class, "Rarm");
+        Larm = hardwareMap.get(CRServo.class, "Larm");
+        Rarm = hardwareMap.get(CRServo.class, "Rarm");
         claw = hardwareMap.get(Servo.class, "claw1");
         claw2 = hardwareMap.get(Servo.class, "claw2");
-        arm = hardwareMap.get(CRServo.class, "arm");
-        //arm2 = hardwareMap.get(CRServo.class, "arm2");
         drone = hardwareMap.get(Servo.class,"drone");
         wrist = hardwareMap.get(CRServo.class, "wrist");
 
-        double dronePos =0.65;
+        double dronePos =0.8;
         FR.setDirection(DcMotorEx.Direction.FORWARD);
         BR.setDirection(DcMotorEx.Direction.FORWARD);
         double speedDivide = 1;
@@ -86,15 +84,7 @@ public class DriveNormal extends LinearOpMode {
             }
 
             //slides
-            if (gamepad1.right_trigger>0.3){
-                Larm.setPower(0.9);
-            } else if (gamepad1.left_trigger>0.3){
-                Rarm.setPower(0.9);
-                Larm.setPower(-0.9);
-            } else{
-                Larm.setPower(0);
-                Rarm.setPower(0);
-            }
+
 
             double frontLeftSpd=(y+x+rx)/speedDivide; //y+x+rx
             double frontRightSpd=(y-x-rx)/speedDivide;
@@ -121,8 +111,9 @@ public class DriveNormal extends LinearOpMode {
             claw.setPosition(Range.clip(clawPosition, MIN_POSITION, MAX_POSITION));
             claw2.setPosition(Range.clip(1-clawPosition, MIN_POSITION, MAX_POSITION));
             drone.setPosition(Range.clip(dronePos, MIN_POSITION,MAX_POSITION));
-            arm.setPower(contPower);
-            //arm2.setPower(-contPower);
+
+            Larm.setPower(-contPower);
+            Rarm.setPower(contPower);
 
             telemetry.addData("state",drone.getPosition());
             telemetry.addData("Larm",Larm.getPower());
