@@ -14,9 +14,9 @@ public class DriveNormal extends LinearOpMode {
 
     private DcMotorEx FR, FL, BL, BR;
     private double FRP, FLP, BLP, BRP;
-    private Servo claw, claw2, drone;
+    private Servo claw, claw2, drone, Larm, Rarm;
 
-    private CRServo wrist, Larm, Rarm;
+    private CRServo wrist;
     double MIN_POSITION = 0, MAX_POSITION = 1;
     double contPower;
     @Override
@@ -25,20 +25,23 @@ public class DriveNormal extends LinearOpMode {
         BR = hardwareMap.get(DcMotorEx.class, "BR");
         FL = hardwareMap.get(DcMotorEx.class, "FL");
         FR = hardwareMap.get(DcMotorEx.class, "FR");
-        Larm = hardwareMap.get(CRServo.class, "Larm");
-        Rarm = hardwareMap.get(CRServo.class, "Rarm");
+        Larm = hardwareMap.get(Servo.class, "Larm");
+        Rarm = hardwareMap.get(Servo.class, "Rarm");
         claw = hardwareMap.get(Servo.class, "claw1");
         claw2 = hardwareMap.get(Servo.class, "claw2");
+//        arm = hardwareMap.get(CRServo.class, "arm");
+        //arm2 = hardwareMap.get(CRServo.class, "arm2");
         drone = hardwareMap.get(Servo.class,"drone");
         wrist = hardwareMap.get(CRServo.class, "wrist");
 
-        double dronePos =0.8;
+        double dronePos =0.65;
         FR.setDirection(DcMotorEx.Direction.FORWARD);
         BR.setDirection(DcMotorEx.Direction.FORWARD);
         double speedDivide = 1;
         double clawPosition;
         BL.setDirection(DcMotorEx.Direction.REVERSE);//switched from BR TO BL
         FL.setDirection(DcMotorEx.Direction.REVERSE);//switched from FR TO FL
+        Rarm.setDirection(Servo.Direction.REVERSE);
 
         waitForStart();
 
@@ -48,7 +51,7 @@ public class DriveNormal extends LinearOpMode {
             double y = 0.8*(Math.pow(-gamepad1.left_stick_y,2))*Math.signum(-gamepad1.left_stick_y); //y value is inverted
             double x = 0.8*(Math.pow(gamepad1.left_stick_x, 2))*Math.signum(gamepad1.left_stick_x);
             double rx = -gamepad1.right_stick_x;
-            if (gamepad1.left_bumper){
+            if (gamepad1.a){
                 speedDivide = 4;
             } else {
                 speedDivide = 1.3;
@@ -57,16 +60,9 @@ public class DriveNormal extends LinearOpMode {
 
 
             //claw
-            if (gamepad1.a && clawPosition > MIN_POSITION) clawPosition -= .01;
-            if (gamepad1.b && clawPosition < MAX_POSITION) clawPosition += .01;
+            if ((gamepad1.right_trigger > 0) && clawPosition > MIN_POSITION) clawPosition -= .01;
+            if ((gamepad1.left_trigger > 0) && clawPosition < MAX_POSITION) clawPosition += .01;
 
-            //arm
-            if (gamepad1.left_bumper)
-                contPower = .80;
-            else if (gamepad1.right_bumper)
-                contPower = -.80;
-            else
-                contPower = 0.0;
 
             //wrist
 
@@ -84,7 +80,13 @@ public class DriveNormal extends LinearOpMode {
             }
 
             //slides
-
+            if (gamepad1.right_bumper){
+                Larm.setPosition(0.7);
+                Rarm.setPosition(0.7);
+            } else if (gamepad1.left_bumper) {
+                Rarm.setPosition(0);
+                Larm.setPosition(0);
+            }
 
             double frontLeftSpd=(y+x+rx)/speedDivide; //y+x+rx
             double frontRightSpd=(y-x-rx)/speedDivide;
@@ -111,12 +113,9 @@ public class DriveNormal extends LinearOpMode {
             claw.setPosition(Range.clip(clawPosition, MIN_POSITION, MAX_POSITION));
             claw2.setPosition(Range.clip(1-clawPosition, MIN_POSITION, MAX_POSITION));
             drone.setPosition(Range.clip(dronePos, MIN_POSITION,MAX_POSITION));
-
-            Larm.setPower(-contPower);
-            Rarm.setPower(contPower);
+            //arm2.setPower(-contPower);
 
             telemetry.addData("state",drone.getPosition());
-            telemetry.addData("Larm",Larm.getPower());
             telemetry.addData("right trig",gamepad1.right_trigger);
             telemetry.update();
         }
