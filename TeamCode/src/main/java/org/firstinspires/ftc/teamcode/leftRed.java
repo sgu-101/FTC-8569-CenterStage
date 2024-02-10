@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -28,7 +29,7 @@ public class leftRed extends LinearOpMode {
     private DcMotor frontRight;
     OpenCvCamera cam = null;
     boolean done = false;
-    private int width=720,height=480;
+    private int width=1280,height=720;
     @Override
     public void runOpMode(){
         backLeft = hardwareMap.get(DcMotor.class, "BL");
@@ -50,7 +51,7 @@ public class leftRed extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        cam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1") );
         emptyPipeline pipe = new emptyPipeline();
         cam.setPipeline(pipe);
         cam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -59,7 +60,7 @@ public class leftRed extends LinearOpMode {
             public void onOpened()
             {
                 telemetry.addData("correct", 1);
-                cam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                cam.startStreaming(width, height,OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
             @Override
             public void onError(int errorCode)
@@ -190,11 +191,11 @@ public class leftRed extends LinearOpMode {
         public Mat processFrame(Mat input)
         {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
+            telemetry.addLine("helpme oh myg od");
 
-
-            Rect leftRect = new Rect(1,1,width/3,height-1);
-            Rect midRect = new Rect(2+(width/3),1,width/3,height-1);
-            Rect rightRect = new Rect(3+(2*width/3),1,width-(4+(2*width/3)),height-1);
+            Rect leftRect = new Rect(1,1,450,height-1);
+            Rect midRect = new Rect(451,1,450,height-1);
+            Rect rightRect = new Rect(902,1,460,height-1);
 
             input.copyTo(output);
             Imgproc.rectangle(output,leftRect,rectColor,2);

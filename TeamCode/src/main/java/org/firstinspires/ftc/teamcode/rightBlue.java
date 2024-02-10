@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -19,6 +20,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Core;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
@@ -54,7 +56,7 @@ public class rightBlue extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        cam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1") );
         emptyPipeline pipe = new emptyPipeline();
         cam.setPipeline(pipe);
         cam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -68,7 +70,7 @@ public class rightBlue extends LinearOpMode {
             @Override
             public void onError(int errorCode)
             {
-                telemetry.addData("incorrect", 0);
+                telemetry.addData("incorrect", errorCode);
             }
         });
 
@@ -212,8 +214,8 @@ public class rightBlue extends LinearOpMode {
 
 
             Rect leftRect = new Rect(1,1,width/3,height-1);
-            Rect midRect = new Rect(2+(width/3),1,width/3,height-1);
-            Rect rightRect = new Rect(3+(2*width/3),1,width-(4+(2*width/3)),height-1);
+            Rect midRect = new Rect(1+(width/3),1,width/3,height-1);
+            Rect rightRect = new Rect(2+(2*width/3),1,(width/3),height-1);
 
             input.copyTo(output);
             Imgproc.rectangle(output,leftRect,rectColor,1);
