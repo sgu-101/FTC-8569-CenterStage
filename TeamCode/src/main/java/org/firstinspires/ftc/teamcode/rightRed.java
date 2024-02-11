@@ -10,6 +10,7 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.opencv.core.Mat;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -27,10 +28,11 @@ public class rightRed extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
+    private Servo claw;
     OpenCvCamera cam = null;
     boolean done = false;
 
-    private int width= 640,height = 480;
+    private int width= 1280,height = 720;
 
     @Override
     public void runOpMode(){
@@ -38,6 +40,8 @@ public class rightRed extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "BR");
         frontLeft = hardwareMap.get(DcMotor.class, "FL");
         frontRight = hardwareMap.get(DcMotor.class, "FR");
+        claw = hardwareMap.get(Servo.class, "claw1");
+
 
 
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -62,7 +66,7 @@ public class rightRed extends LinearOpMode {
             public void onOpened()
             {
                 telemetry.addData("correct", 1);
-                cam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                cam.startStreaming(width, height, OpenCvCameraRotation.UPRIGHT);
             }
             @Override
             public void onError(int errorCode)
@@ -81,6 +85,7 @@ public class rightRed extends LinearOpMode {
 
         while (opModeIsActive())
         {
+            claw.setPosition(0.9);
             telemetry.update();
             int initialPropPos = pipe.getPropPosition();
             if (!done){
@@ -89,7 +94,7 @@ public class rightRed extends LinearOpMode {
                     backLeft.setPower(-0.2);
                     frontRight.setPower(-0.2);
                     backRight.setPower(0.2);
-                    sleep(300);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -100,16 +105,27 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
                     sleep(800);
+                    claw.setPosition(0.6);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(600);
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(-0.3);
+                    backRight.setPower(-0.3);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
-                    sleep(200);
+                    frontLeft.setPower(-0.5);
+                    backLeft.setPower(0.5);
+                    frontRight.setPower(0.5);
+                    backRight.setPower(-0.5);
+                    sleep(800);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -121,22 +137,27 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
                     sleep(1400);
+                    claw.setPosition(0.6);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(600);
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(-0.3);
+                    backRight.setPower(-0.3);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
-                    sleep(200);
-                    /**
-                     frontLeft.setPower(0.2);
-                     backLeft.setPower(-0.2);
-                     frontRight.setPower(-0.2);
-                     backRight.setPower(0.2);
-                     sleep(800);**/
+                    frontLeft.setPower(-0.5);
+                    backLeft.setPower(0.5);
+                    frontRight.setPower(0.5);
+                    backRight.setPower(-0.5);
+                    sleep(800);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -148,7 +169,7 @@ public class rightRed extends LinearOpMode {
                     backLeft.setPower(0.2);
                     frontRight.setPower(0.2);
                     backRight.setPower(-0.2);
-                    sleep(300);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -159,16 +180,27 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
                     sleep(800);
+                    claw.setPosition(0.6);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(600);
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(-0.3);
+                    backRight.setPower(-0.3);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
-                    sleep(200);
+                    frontLeft.setPower(-0.5);
+                    backLeft.setPower(0.5);
+                    frontRight.setPower(0.5);
+                    backRight.setPower(-0.5);
+                    sleep(800);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -210,10 +242,9 @@ public class rightRed extends LinearOpMode {
         {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
 
-
-            Rect leftRect = new Rect(1,1,width/3,height-1);
-            Rect midRect = new Rect(2+(width/3),1,width/3,height-1);
-            Rect rightRect = new Rect(3+(2*width/3),1,width-(4+(2*width/3)),height-1);
+            Rect leftRect = new Rect(1,1,426,height-1);
+            Rect midRect = new Rect(428,1,426,height-1);
+            Rect rightRect = new Rect(855,1,425,height-1);
 
             input.copyTo(output);
             Imgproc.rectangle(output,leftRect,rectColor,2);

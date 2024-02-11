@@ -1,21 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.CRServo;
-
-
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Autonomous
-public class Autonomus extends LinearOpMode {
+public class AutonomusRed extends LinearOpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
     private DcMotor frontLeft;
@@ -64,10 +55,10 @@ public class Autonomus extends LinearOpMode {
         frontRight.setPower(0);
         backRight.setPower(0);
         sleep(200);
-        frontLeft.setPower(0.5);
-        backLeft.setPower(-0.5);
-        frontRight.setPower(-0.5);
-        backRight.setPower(0.5);
+        frontLeft.setPower(-0.5);
+        backLeft.setPower(0.5);
+        frontRight.setPower(0.5);
+        backRight.setPower(-0.5);
         sleep(800);
         frontLeft.setPower(0);
         backLeft.setPower(0);

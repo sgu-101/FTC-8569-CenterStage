@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.imgproc.Imgproc;
@@ -27,6 +28,7 @@ public class leftRed extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
+    private Servo claw;
     OpenCvCamera cam = null;
     boolean done = false;
     private int width=1280,height=720;
@@ -36,6 +38,7 @@ public class leftRed extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "BR");
         frontLeft = hardwareMap.get(DcMotor.class, "FL");
         frontRight = hardwareMap.get(DcMotor.class, "FR");
+        claw = hardwareMap.get(Servo.class,"claw1");
 
 
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -60,7 +63,7 @@ public class leftRed extends LinearOpMode {
             public void onOpened()
             {
                 telemetry.addData("correct", 1);
-                cam.startStreaming(width, height,OpenCvCameraRotation.SIDEWAYS_LEFT);
+                cam.startStreaming(width, height,OpenCvCameraRotation.UPRIGHT);
             }
             @Override
             public void onError(int errorCode)
@@ -79,6 +82,7 @@ public class leftRed extends LinearOpMode {
 
         while (opModeIsActive())
         {
+            claw.setPosition(0.9);
             telemetry.update();
             int initialPropPos = pipe.getPropPosition();
             if (!done){
@@ -87,22 +91,28 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(-0.2);
                     frontRight.setPower(-0.2);
                     backRight.setPower(0.2);
-                    sleep(300);
-                    frontLeft.setPower(0.45);
-                    backLeft.setPower(0.45);
-                    frontRight.setPower(0.45);
-                    backRight.setPower(0.45);
-                    sleep(700);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
+                    frontLeft.setPower(0.45);
+                    backLeft.setPower(0.45);
+                    frontRight.setPower(0.45);
+                    backRight.setPower(0.45);
+                    sleep(800);
+                    claw.setPosition(0.6);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(600);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(200);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -113,17 +123,18 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(0.45);
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
-                    sleep(700);
+                    sleep(1400);
+                    claw.setPosition(0.6);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
-                    sleep(200);
+                    sleep(600);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(800);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -135,22 +146,28 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(0.2);
                     frontRight.setPower(0.2);
                     backRight.setPower(-0.2);
-                    sleep(300);
-                    frontLeft.setPower(0.45);
-                    backLeft.setPower(0.45);
-                    frontRight.setPower(0.45);
-                    backRight.setPower(0.45);
-                    sleep(700);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
+                    frontLeft.setPower(0.45);
+                    backLeft.setPower(0.45);
+                    frontRight.setPower(0.45);
+                    backRight.setPower(0.45);
+                    sleep(800);
+                    claw.setPosition(0.6);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(600);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(200);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -173,6 +190,12 @@ public class leftRed extends LinearOpMode {
             sleep(100);
         }
     }
+    class literallyEmpty extends OpenCvPipeline{
+        @Override
+        public Mat processFrame(Mat input){
+            return input;
+        }
+    }
     class emptyPipeline extends OpenCvPipeline
     {
         Mat YCbCr = new Mat();
@@ -191,11 +214,9 @@ public class leftRed extends LinearOpMode {
         public Mat processFrame(Mat input)
         {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
-            telemetry.addLine("helpme oh myg od");
-
-            Rect leftRect = new Rect(1,1,450,height-1);
-            Rect midRect = new Rect(451,1,450,height-1);
-            Rect rightRect = new Rect(902,1,460,height-1);
+            Rect leftRect = new Rect(1,1,426,height-1);
+            Rect midRect = new Rect(428,1,426,height-1);
+            Rect rightRect = new Rect(855,1,425,height-1);
 
             input.copyTo(output);
             Imgproc.rectangle(output,leftRect,rectColor,2);
@@ -220,24 +241,18 @@ public class leftRed extends LinearOpMode {
             rightavgred = rightavg.val[0];
 
             if (leftavgred<midavgred && leftavgred<rightavgred){
-                telemetry.addData("leftavg",leftavgred);
-                telemetry.addData("midavg",midavgred);
-                telemetry.addData("rightavg",rightavgred);
+
                 telemetry.addLine("Left");
                 propPosition = 1;
 
             }
             else if (midavgred<leftavgred && midavgred<rightavgred){
-                telemetry.addData("leftavg",leftavgred);
-                telemetry.addData("midavg",midavgred);
-                telemetry.addData("rightavg",rightavgred);
-                telemetry.addLine("Mid");
+
+                telemetry.addLine("mid");
                 propPosition = 2;
             }
             else if (rightavgred<leftavgred && rightavgred<midavgred){
-                telemetry.addData("leftavg",leftavgred);
-                telemetry.addData("midavg",midavgred);
-                telemetry.addData("rightavg",rightavgred);
+
                 telemetry.addLine("Right");
                 propPosition = 3;
             }

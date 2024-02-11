@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp
 public class DriveNormal extends LinearOpMode {
 
-    private DcMotorEx FR, FL, BL, BR;
+    private DcMotorEx FR, FL, BL, BR, LSlides,RSlides;
     private double FRP, FLP, BLP, BRP;
     private Servo claw, claw2, drone, Larm, Rarm, wrist;
 
@@ -28,8 +29,8 @@ public class DriveNormal extends LinearOpMode {
         Rarm = hardwareMap.get(Servo.class, "Rarm");
         claw = hardwareMap.get(Servo.class, "claw1");
         claw2 = hardwareMap.get(Servo.class, "claw2");
-//        arm = hardwareMap.get(CRServo.class, "arm");
-        //arm2 = hardwareMap.get(CRServo.class, "arm2");
+        LSlides = hardwareMap.get(DcMotorEx.class,"LSlides");
+        RSlides = hardwareMap.get(DcMotorEx.class,"RSlides");
         drone = hardwareMap.get(Servo.class,"drone");
         wrist = hardwareMap.get(Servo.class, "wrist");
 
@@ -42,6 +43,14 @@ public class DriveNormal extends LinearOpMode {
         BL.setDirection(DcMotorEx.Direction.REVERSE);//switched from BR TO BL
         FL.setDirection(DcMotorEx.Direction.REVERSE);//switched from FR TO FL
         Rarm.setDirection(Servo.Direction.REVERSE);
+
+        BL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        FL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        BR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        FR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+        LSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
@@ -64,31 +73,41 @@ public class DriveNormal extends LinearOpMode {
             if (gamepad1.right_trigger > 0.2) clawPosition = 1;
             if (gamepad1.left_trigger > 0.2) clawPosition = 0.7;
 
+            //slides
+            if (gamepad1.dpad_down){
+                LSlides.setPower(0.8);
+                RSlides.setPower(-0.8);
+            } else if (gamepad1.dpad_up){
+                LSlides.setPower(-0.8);
+                RSlides.setPower(0.8);
+            } else {
+                LSlides.setPower(0);
+                RSlides.setPower(0);
+            }
 
-            //wrist
-            //0.78,0.729(floor)
             //drone
             if (gamepad1.x) {
                 dronePos -= 0.01;
             }
 
-            //slides
+            //macro
             if (gamepad1.right_bumper){
-                Larm.setPosition(0.9);
-                Rarm.setPosition(0.9);
+                Larm.setPosition(0.85);
+                Rarm.setPosition(0.85);
                 wristPosition =0.81;
             } else if (gamepad1.left_bumper) {
-                Rarm.setPosition(0);
-                Larm.setPosition(0);
-                wristPosition = 0.73;
+                Rarm.setPosition(0.05);
+                Larm.setPosition(0.05);
+                wristPosition = 0.75;
             }
 
-            double frontLeftSpd=(y+x+rx)/speedDivide; //y+x+rx
-            double frontRightSpd=(y-x-rx)/speedDivide;
+
+            //y+x+rx
             FLP = (y + x - rx)/speedDivide;
             FRP = (y - x + rx)/speedDivide;
             BLP = (y - x - rx)/speedDivide;
             BRP = (y + x + rx)/speedDivide;
+
 
             double denominator = Math.max(Math.abs(y)+Math.abs(x)+Math.abs(rx),1);
             FLP /= denominator;
@@ -100,10 +119,7 @@ public class DriveNormal extends LinearOpMode {
             FR.setPower(FRP);
             BL.setPower(BLP);
             BR.setPower(BRP);
-            BL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-            FL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-            BR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-            FR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
 
             claw.setPosition(Range.clip(clawPosition-0.1, MIN_POSITION, MAX_POSITION));
             claw2.setPosition(Range.clip(1-clawPosition, MIN_POSITION, MAX_POSITION));

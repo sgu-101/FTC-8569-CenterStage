@@ -33,7 +33,7 @@ public class rightBlue extends LinearOpMode {
     private Servo claw;
     OpenCvCamera cam = null;
     boolean done = false;
-    private int width = 640, height=480;
+    private int width = 1280, height=720;
     @Override
     public void runOpMode(){
         backLeft = hardwareMap.get(DcMotor.class, "BL");
@@ -65,7 +65,7 @@ public class rightBlue extends LinearOpMode {
             public void onOpened()
             {
                 telemetry.addData("correct", 1);
-                cam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                cam.startStreaming(width, height, OpenCvCameraRotation.UPRIGHT);
             }
             @Override
             public void onError(int errorCode)
@@ -84,6 +84,7 @@ public class rightBlue extends LinearOpMode {
 
         while (opModeIsActive())
         {
+            claw.setPosition(0.9);
             telemetry.update();
             int initialPropPos = pipe.getPropPosition();
             if (!done){
@@ -92,7 +93,7 @@ public class rightBlue extends LinearOpMode {
                     backLeft.setPower(-0.2);
                     frontRight.setPower(-0.2);
                     backRight.setPower(0.2);
-                    sleep(300);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -103,17 +104,17 @@ public class rightBlue extends LinearOpMode {
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
                     sleep(800);
-                    claw.setPosition(Range.clip(0.3, 0, 1));
+                    claw.setPosition(0.6);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
-                    sleep(1200);
+                    sleep(600);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(200);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -125,23 +126,17 @@ public class rightBlue extends LinearOpMode {
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
                     sleep(1400);
-                    claw.setPosition(Range.clip(0.3, 0, 1));
+                    claw.setPosition(0.6);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
-                    sleep(1200);
+                    sleep(600);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(200);
-                    /**
-                     frontLeft.setPower(0.2);
-                     backLeft.setPower(-0.2);
-                     frontRight.setPower(-0.2);
-                     backRight.setPower(0.2);
-                     sleep(800);**/
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -153,7 +148,7 @@ public class rightBlue extends LinearOpMode {
                     backLeft.setPower(0.2);
                     frontRight.setPower(0.2);
                     backRight.setPower(-0.2);
-                    sleep(300);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -164,17 +159,17 @@ public class rightBlue extends LinearOpMode {
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
                     sleep(800);
-                    claw.setPosition(Range.clip(0.7, 0, 1));
+                    claw.setPosition(0.6);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
-                    sleep(1200);
+                    sleep(600);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(200);
+                    sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -213,9 +208,9 @@ public class rightBlue extends LinearOpMode {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
 
 
-            Rect leftRect = new Rect(1,1,width/3,height-1);
-            Rect midRect = new Rect(1+(width/3),1,width/3,height-1);
-            Rect rightRect = new Rect(2+(2*width/3),1,(width/3),height-1);
+            Rect leftRect = new Rect(1,1,426,height-1);
+            Rect midRect = new Rect(428,1,426,height-1);
+            Rect rightRect = new Rect(855,1,425,height-1);
 
             input.copyTo(output);
             Imgproc.rectangle(output,leftRect,rectColor,1);
@@ -227,9 +222,9 @@ public class rightBlue extends LinearOpMode {
             midCrop = YCbCr.submat(midRect);
             rightCrop = YCbCr.submat(rightRect);
 
-            Core.extractChannel(leftCrop, leftCrop, 2);
-            Core.extractChannel(midCrop, midCrop, 2);
-            Core.extractChannel(rightCrop, rightCrop, 2);
+            Core.extractChannel(leftCrop, leftCrop, 1);
+            Core.extractChannel(midCrop, midCrop, 1);
+            Core.extractChannel(rightCrop, rightCrop, 1);
 
             Scalar leftavg = Core.mean(leftCrop);
             Scalar midavg = Core.mean(midCrop);
@@ -240,24 +235,15 @@ public class rightBlue extends LinearOpMode {
             rightavgred = rightavg.val[0];
 
             if (leftavgred<midavgred && leftavgred<rightavgred){
-                telemetry.addData("leftavg",leftavgred);
-                telemetry.addData("midavg",midavgred);
-                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Left");
                 propPosition = 1;
 
             }
             else if (midavgred<leftavgred && midavgred<rightavgred){
-                telemetry.addData("leftavg",leftavgred);
-                telemetry.addData("midavg",midavgred);
-                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Mid");
                 propPosition = 2;
             }
             else if (rightavgred<leftavgred && rightavgred<midavgred){
-                telemetry.addData("leftavg",leftavgred);
-                telemetry.addData("midavg",midavgred);
-                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Right");
                 propPosition = 3;
             }
