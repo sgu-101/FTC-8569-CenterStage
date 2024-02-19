@@ -88,6 +88,7 @@ public class rightRed extends LinearOpMode {
             claw.setPosition(0.9);
             telemetry.update();
             int initialPropPos = pipe.getPropPosition();
+            /**
             if (!done){
                 if (initialPropPos==1){
                     frontLeft.setPower(0.2);
@@ -209,7 +210,7 @@ public class rightRed extends LinearOpMode {
 
                 }
             }
-
+            **/
 
 
 
@@ -242,14 +243,14 @@ public class rightRed extends LinearOpMode {
         {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
 
-            Rect leftRect = new Rect(1,1,426,height-1);
-            Rect midRect = new Rect(428,1,426,height-1);
-            Rect rightRect = new Rect(855,1,425,height-1);
+            Rect leftRect = new Rect(1,height/2,426,(height/2)-2);
+            Rect midRect = new Rect(428,height/2,426,(height/2)-2);
+            Rect rightRect = new Rect(855,height/2,425,(height/2)-2);
 
             input.copyTo(output);
-            Imgproc.rectangle(output,leftRect,rectColor,2);
-            Imgproc.rectangle(output,midRect,rectColor,2);
-            Imgproc.rectangle(output,rightRect,rectColor,2);
+            Imgproc.rectangle(output,leftRect,rectColor,5);
+            Imgproc.rectangle(output,midRect,rectColor,5);
+            Imgproc.rectangle(output,rightRect,new Scalar(0,255.0,0.0),5);
 
 
             leftCrop = YCbCr.submat(leftRect);
@@ -291,7 +292,7 @@ public class rightRed extends LinearOpMode {
                 propPosition = 3;
             }
 
-            return input;
+            return output;
 
         }
 

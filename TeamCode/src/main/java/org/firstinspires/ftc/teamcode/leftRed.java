@@ -83,25 +83,25 @@ public class leftRed extends LinearOpMode {
         while (opModeIsActive())
         {
             claw.setPosition(0.9);
-            telemetry.update();
             int initialPropPos = pipe.getPropPosition();
             if (!done){
+                telemetry.update();
                 if (initialPropPos==1){
-                    frontLeft.setPower(0.2);
-                    backLeft.setPower(-0.2);
-                    frontRight.setPower(-0.2);
-                    backRight.setPower(0.2);
-                    sleep(500);
+                    frontLeft.setPower(-0.6);
+                    backLeft.setPower(0.6);
+                    frontRight.setPower(0.6);
+                    backRight.setPower(-0.6);
+                    sleep(700);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
-                    frontLeft.setPower(0.45);
-                    backLeft.setPower(0.45);
-                    frontRight.setPower(0.45);
-                    backRight.setPower(0.45);
-                    sleep(800);
+                    frontLeft.setPower(0.65);
+                    backLeft.setPower(0.65);
+                    frontRight.setPower(0.65);
+                    backRight.setPower(0.65);
+                    sleep(600);
                     claw.setPosition(0.6);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -112,7 +112,7 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(500);
+                    sleep(1000);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -123,7 +123,7 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(0.45);
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
-                    sleep(1400);
+                    sleep(1200);
                     claw.setPosition(0.6);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -142,32 +142,39 @@ public class leftRed extends LinearOpMode {
                     done = true;
 
                 } else if (initialPropPos==3){
-                    frontLeft.setPower(-0.2);
-                    backLeft.setPower(0.2);
-                    frontRight.setPower(0.2);
-                    backRight.setPower(-0.2);
-                    sleep(500);
-                    frontLeft.setPower(0);
-                    backLeft.setPower(0);
-                    frontRight.setPower(0);
-                    backRight.setPower(0);
-                    sleep(200);
                     frontLeft.setPower(0.45);
                     backLeft.setPower(0.45);
                     frontRight.setPower(0.45);
                     backRight.setPower(0.45);
-                    sleep(800);
-                    claw.setPosition(0.6);
+                    sleep(900);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(600);
+                    frontLeft.setPower(0.3);
+                    backLeft.setPower(0.3);
+                    frontRight.setPower(-0.3);
+                    backRight.setPower(-0.3);
+                    sleep(1200);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    /**
+                    sleep(300);
+                    frontLeft.setPower(0.3);
+                    backLeft.setPower(0.3);
+                    frontRight.setPower(0.3);
+                    backRight.setPower(0.3);
+                     **/
+                    claw.setPosition(0.6);
+                    sleep(300);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(500);
+                    sleep(600);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -214,14 +221,15 @@ public class leftRed extends LinearOpMode {
         public Mat processFrame(Mat input)
         {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
-            Rect leftRect = new Rect(1,1,426,height-1);
-            Rect midRect = new Rect(428,1,426,height-1);
-            Rect rightRect = new Rect(855,1,425,height-1);
+
+            Rect leftRect = new Rect(1,height/2,426,(height/2)-2);
+            Rect midRect = new Rect(428,height/2,426,(height/2)-2);
+            Rect rightRect = new Rect(855,height/2,425,(height/2)-2);
 
             input.copyTo(output);
-            Imgproc.rectangle(output,leftRect,rectColor,2);
-            Imgproc.rectangle(output,midRect,rectColor,2);
-            Imgproc.rectangle(output,rightRect,rectColor,2);
+            Imgproc.rectangle(output,leftRect,rectColor,5);
+            Imgproc.rectangle(output,midRect,rectColor,5);
+            Imgproc.rectangle(output,rightRect,new Scalar(0,255.0,0.0),5);
 
 
             leftCrop = YCbCr.submat(leftRect);
@@ -241,23 +249,29 @@ public class leftRed extends LinearOpMode {
             rightavgred = rightavg.val[0];
 
             if (leftavgred<midavgred && leftavgred<rightavgred){
-
+                telemetry.addData("leftavg",leftavgred);
+                telemetry.addData("midavg",midavgred);
+                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Left");
                 propPosition = 1;
 
             }
             else if (midavgred<leftavgred && midavgred<rightavgred){
-
-                telemetry.addLine("mid");
+                telemetry.addData("leftavg",leftavgred);
+                telemetry.addData("midavg",midavgred);
+                telemetry.addData("rightavg",rightavgred);
+                telemetry.addLine("Mid");
                 propPosition = 2;
             }
             else if (rightavgred<leftavgred && rightavgred<midavgred){
-
+                telemetry.addData("leftavg",leftavgred);
+                telemetry.addData("midavg",midavgred);
+                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Right");
                 propPosition = 3;
             }
 
-            return input;
+            return output;
 
         }
 

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
@@ -16,9 +17,13 @@ public class DriveNormal extends LinearOpMode {
     private DcMotorEx FR, FL, BL, BR, LSlides,RSlides;
     private double FRP, FLP, BLP, BRP;
     private Servo claw, claw2, drone, Larm, Rarm, wrist;
+    //private CRServo axax;
+
 
     double MIN_POSITION = 0, MAX_POSITION = 1;
     double contPower;
+    ElapsedTime eTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+    private boolean idk =false;
     @Override
     public void runOpMode() throws InterruptedException {
         BL = hardwareMap.get(DcMotorEx.class, "BL");
@@ -33,6 +38,7 @@ public class DriveNormal extends LinearOpMode {
         RSlides = hardwareMap.get(DcMotorEx.class,"RSlides");
         drone = hardwareMap.get(Servo.class,"drone");
         wrist = hardwareMap.get(Servo.class, "wrist");
+        //axax = hardwareMap.get(CRServo.class,"x");
 
         double dronePos =0.65;
         FR.setDirection(DcMotorEx.Direction.FORWARD);
@@ -92,13 +98,16 @@ public class DriveNormal extends LinearOpMode {
 
             //macro
             if (gamepad1.right_bumper){
-                Larm.setPosition(0.85);
-                Rarm.setPosition(0.85);
-                wristPosition =0.81;
+                Larm.setPosition(0.8);
+                Rarm.setPosition(0.8);
+                wristPosition =0.45;
             } else if (gamepad1.left_bumper) {
-                Rarm.setPosition(0.05);
-                Larm.setPosition(0.05);
-                wristPosition = 0.75;
+                Rarm.setPosition(0.04);
+                Larm.setPosition(0.04);
+                wristPosition = 0.71;
+            }
+            if (gamepad1.y){
+                wristPosition=0.65;
             }
 
 
@@ -127,9 +136,13 @@ public class DriveNormal extends LinearOpMode {
             wrist.setPosition(Range.clip(wristPosition, MIN_POSITION, MAX_POSITION));
             //arm2.setPower(-contPower);
 
-            telemetry.addData("state",drone.getPosition());
-//            telemetry.addData("right trig",gamepad1.right_trigger);
             telemetry.addData("wrist position", wrist.getPosition());
+            telemetry.addData("clawPosition",clawPosition);
+            telemetry.addData("arm",Larm.getPosition());
+            telemetry.addData("etime",eTime.time());
+            telemetry.addData("Rslides",RSlides.getCurrentPosition());
+            telemetry.addData("LSlides",LSlides.getCurrentPosition());
+
             telemetry.update();
         }
 

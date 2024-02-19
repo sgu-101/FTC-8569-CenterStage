@@ -85,7 +85,6 @@ public class rightBlue extends LinearOpMode {
         while (opModeIsActive())
         {
             claw.setPosition(0.9);
-            telemetry.update();
             int initialPropPos = pipe.getPropPosition();
             if (!done){
                 if (initialPropPos==1){
@@ -207,15 +206,14 @@ public class rightBlue extends LinearOpMode {
         {
             Imgproc.cvtColor(input,YCbCr, Imgproc.COLOR_RGB2YCrCb);
 
-
-            Rect leftRect = new Rect(1,1,426,height-1);
-            Rect midRect = new Rect(428,1,426,height-1);
-            Rect rightRect = new Rect(855,1,425,height-1);
+            Rect leftRect = new Rect(1,height/2,426,(height/2)-2);
+            Rect midRect = new Rect(428,height/2,426,(height/2)-2);
+            Rect rightRect = new Rect(855,height/2,425,(height/2)-2);
 
             input.copyTo(output);
-            Imgproc.rectangle(output,leftRect,rectColor,1);
-            Imgproc.rectangle(output,midRect,rectColor,1);
-            Imgproc.rectangle(output,rightRect,rectColor,1);
+            Imgproc.rectangle(output,leftRect,rectColor,5);
+            Imgproc.rectangle(output,midRect,rectColor,5);
+            Imgproc.rectangle(output,rightRect,new Scalar(0,255.0,0.0),5);
 
 
             leftCrop = YCbCr.submat(leftRect);
@@ -235,20 +233,29 @@ public class rightBlue extends LinearOpMode {
             rightavgred = rightavg.val[0];
 
             if (leftavgred<midavgred && leftavgred<rightavgred){
+                telemetry.addData("leftavg",leftavgred);
+                telemetry.addData("midavg",midavgred);
+                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Left");
                 propPosition = 1;
 
             }
             else if (midavgred<leftavgred && midavgred<rightavgred){
+                telemetry.addData("leftavg",leftavgred);
+                telemetry.addData("midavg",midavgred);
+                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Mid");
                 propPosition = 2;
             }
             else if (rightavgred<leftavgred && rightavgred<midavgred){
+                telemetry.addData("leftavg",leftavgred);
+                telemetry.addData("midavg",midavgred);
+                telemetry.addData("rightavg",rightavgred);
                 telemetry.addLine("Right");
                 propPosition = 3;
             }
 
-            return input;
+            return output;
 
         }
 
