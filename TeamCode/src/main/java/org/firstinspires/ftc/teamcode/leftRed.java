@@ -161,13 +161,6 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
-                    /**
-                    sleep(300);
-                    frontLeft.setPower(0.3);
-                    backLeft.setPower(0.3);
-                    frontRight.setPower(0.3);
-                    backRight.setPower(0.3);
-                     **/
                     claw.setPosition(0.6);
                     sleep(300);
                     frontLeft.setPower(-0.3);
