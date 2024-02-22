@@ -120,7 +120,7 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(1000);
+                    sleep(1100);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -132,6 +132,8 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(-0.4);
                     frontRight.setPower(-0.4);
                     backRight.setPower(0.4);
+                    claw.setPosition(0.9);
+
                     sleep(900);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -142,7 +144,7 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(-0.3);
                     frontRight.setPower(0.3);
                     backRight.setPower(0.3);
-                    sleep(1350);
+                    sleep(1500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -159,7 +161,7 @@ public class leftRed extends LinearOpMode {
                     frontRight.setPower(-0.45);
                     backRight.setPower(-0.45);
 
-                    sleep(3150);
+                    sleep(2650);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -169,13 +171,23 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(-0.4);
                     frontRight.setPower(-0.4);
                     backRight.setPower(0.4);
-                    sleep(1300);
+                    sleep(2250);
                     frontLeft.setPower(0.3);
                     backLeft.setPower(0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(250);
+                    sleep(750);
 
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(200);
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(-0.3);
+                    backRight.setPower(-0.3);
+                    sleep(2050);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
@@ -220,6 +232,7 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(-0.3);
                     frontRight.setPower(0.3);
                     backRight.setPower(0.3);
+                    claw.setPosition(0.9);
                     sleep(1250);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -296,19 +309,117 @@ public class leftRed extends LinearOpMode {
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
+                    sleep(200);
+                    frontLeft.setPower(0.3);
+                    backLeft.setPower(0.3);
+                    frontRight.setPower(0.3);
+                    backRight.setPower(0.3);
+                    sleep(400);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
                     claw.setPosition(0.6);
                     sleep(300);
                     frontLeft.setPower(-0.3);
                     backLeft.setPower(-0.3);
                     frontRight.setPower(-0.3);
                     backRight.setPower(-0.3);
-                    sleep(600);
+                    sleep(1200);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     done = true;
+                    sleep(200);
 
+                    //backboard
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(0.3);
+                    backRight.setPower(0.3);
+                    claw.setPosition(0.9);
+                    sleep(1150);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(300);
+                    frontLeft.setPower(0.6);
+                    backLeft.setPower(0.6);
+                    frontRight.setPower(0.6);
+                    backRight.setPower(0.6);
+                    sleep(1200);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(300);
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(0.3);
+                    backRight.setPower(0.3);
+                    sleep(1500);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(200);
+
+                    frontLeft.setPower(-0.45);
+                    backLeft.setPower(-0.45);
+                    frontRight.setPower(-0.45);
+                    backRight.setPower(-0.45);
+                    sleep(3250);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(200);
+
+                    frontLeft.setPower(-0.4);
+                    backLeft.setPower(0.4);
+                    frontRight.setPower(0.4);
+                    backRight.setPower(-0.4);
+                    sleep(3000);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(200);
+
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(0.3);
+                    backRight.setPower(0.3);
+                    sleep(550);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(200);
+
+                    frontLeft.setPower(-0.3);
+                    backLeft.setPower(-0.3);
+                    frontRight.setPower(-0.3);
+                    backRight.setPower(-0.3);
+                    sleep(1250);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    Larm.setPosition(0.8);
+                    Rarm.setPosition(0.8);
+                    wrist.setPosition(0.45);
+                    sleep(1800);
+                    claw2.setPosition(0.4);
+                    sleep(200);
+                    wrist.setPosition(0.71);
+                    claw2.setPosition(0);
+                    claw.setPosition(0.9);
+                    Larm.setPosition(0.04);
+                    Rarm.setPosition(0.04);
+                    sleep(800);
                 }
             }
 

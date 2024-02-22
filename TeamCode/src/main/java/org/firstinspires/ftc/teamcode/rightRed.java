@@ -148,6 +148,7 @@ public class rightRed extends LinearOpMode {
                     backLeft.setPower(-0.3);
                     frontRight.setPower(0.3);
                     backRight.setPower(0.3);
+                    claw.setPosition(0.9);
                     sleep(100);
 
                     frontLeft.setPower(0);
@@ -231,6 +232,7 @@ public class rightRed extends LinearOpMode {
                     backLeft.setPower(-0.3);
                     frontRight.setPower(0.3);
                     backRight.setPower(0.3);
+                    claw.setPosition(0.9);
                     sleep(1250);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -327,12 +329,23 @@ public class rightRed extends LinearOpMode {
                     backLeft.setPower(-0.3);
                     frontRight.setPower(0.3);
                     backRight.setPower(0.3);
+                    claw.setPosition(0.9);
                     sleep(1100);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
+                    frontLeft.setPower(0.4);
+                    backLeft.setPower(-0.4);
+                    frontRight.setPower(-0.4);
+                    backRight.setPower(0.4);
+                    sleep(100);
+                    frontLeft.setPower(0);
+                    backLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backRight.setPower(0);
+                    sleep(200);
                     frontLeft.setPower(-0.45);
                     backLeft.setPower(-0.45);
                     frontRight.setPower(-0.45);
