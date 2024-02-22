@@ -11,6 +11,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.opencv.core.Mat;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -29,6 +30,8 @@ public class rightRed extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private Servo claw, claw2,Larm,Rarm,wrist;
+    private VoltageSensor voltageSensor;
+    private double voltageconstant;
     OpenCvCamera cam = null;
     boolean done = false;
 
@@ -45,6 +48,9 @@ public class rightRed extends LinearOpMode {
         Larm = hardwareMap.get(Servo.class,"Larm");
         Rarm = hardwareMap.get(Servo.class,"Rarm");
         wrist = hardwareMap.get(Servo.class,"wrist");
+        voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
+
+        voltageconstant= 12.5/voltageSensor.getVoltage();
 
 
 
@@ -99,30 +105,30 @@ public class rightRed extends LinearOpMode {
             if (!done){
                 telemetry.update();
                 if (initialPropPos==1){
-                    frontLeft.setPower(0.45);
-                    backLeft.setPower(0.45);
-                    frontRight.setPower(0.45);
-                    backRight.setPower(0.45);
+                    frontLeft.setPower(0.45*voltageconstant);
+                    backLeft.setPower(0.45*voltageconstant);
+                    frontRight.setPower(0.45*voltageconstant);
+                    backRight.setPower(0.45*voltageconstant);
                     sleep(1000);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(600);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(0.3);
-                    backRight.setPower(0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(0.3*voltageconstant);
+                    backRight.setPower(0.3*voltageconstant);
                     sleep(1200);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
-                    frontLeft.setPower(0.3);
-                    backLeft.setPower(0.3);
-                    frontRight.setPower(0.3);
-                    backRight.setPower(0.3);
+                    frontLeft.setPower(0.3*voltageconstant);
+                    backLeft.setPower(0.3*voltageconstant);
+                    frontRight.setPower(0.3*voltageconstant);
+                    backRight.setPower(0.3*voltageconstant);
 
                     sleep(700);
                     claw.setPosition(0.6);
@@ -131,10 +137,10 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(-0.3*voltageconstant);
+                    backRight.setPower(-0.3*voltageconstant);
                     sleep(600);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -144,10 +150,10 @@ public class rightRed extends LinearOpMode {
 
                     //on the backboard hopefully
 
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(0.3);
-                    backRight.setPower(0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(0.3*voltageconstant);
+                    backRight.setPower(0.3*voltageconstant);
                     claw.setPosition(0.9);
                     sleep(100);
 
@@ -156,20 +162,20 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
-                    frontLeft.setPower(0.36);
-                    backLeft.setPower(-0.36);
-                    frontRight.setPower(-0.36);
-                    backRight.setPower(0.36);
+                    frontLeft.setPower(0.36*voltageconstant);
+                    backLeft.setPower(-0.36*voltageconstant);
+                    frontRight.setPower(-0.36*voltageconstant);
+                    backRight.setPower(0.36*voltageconstant);
                     sleep(620);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
-                    frontLeft.setPower(-0.45);
-                    backLeft.setPower(-0.45);
-                    frontRight.setPower(-0.45);
-                    backRight.setPower(-0.45);
+                    frontLeft.setPower(-0.45*voltageconstant);
+                    backLeft.setPower(-0.45*voltageconstant);
+                    frontRight.setPower(-0.45*voltageconstant);
+                    backRight.setPower(-0.45*voltageconstant);
 
                     sleep(1250);
                     frontLeft.setPower(0);
@@ -189,15 +195,15 @@ public class rightRed extends LinearOpMode {
                     Rarm.setPosition(0.04);
                     sleep(800);
                     //strafe into corner
-                    frontLeft.setPower(-0.4);
-                    backLeft.setPower(0.4);
-                    frontRight.setPower(0.4);
-                    backRight.setPower(-0.4);
+                    frontLeft.setPower(-0.4*voltageconstant);
+                    backLeft.setPower(0.4*voltageconstant);
+                    frontRight.setPower(0.4*voltageconstant);
+                    backRight.setPower(-0.4*voltageconstant);
                     sleep(1800);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(-0.3*voltageconstant);
+                    backRight.setPower(-0.3*voltageconstant);
                     sleep(800);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -205,10 +211,10 @@ public class rightRed extends LinearOpMode {
                     backRight.setPower(0);
 
                 } else if (initialPropPos==2){
-                    frontLeft.setPower(0.45);
-                    backLeft.setPower(0.45);
-                    frontRight.setPower(0.45);
-                    backRight.setPower(0.45);
+                    frontLeft.setPower(0.45*voltageconstant);
+                    backLeft.setPower(0.45*voltageconstant);
+                    frontRight.setPower(0.45*voltageconstant);
+                    backRight.setPower(0.45*voltageconstant);
                     sleep(1150);
                     claw.setPosition(0.6);
                     frontLeft.setPower(0);
@@ -216,10 +222,10 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(600);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(-0.3*voltageconstant);
+                    backRight.setPower(-0.3*voltageconstant);
                     sleep(500);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -228,10 +234,10 @@ public class rightRed extends LinearOpMode {
                     done = true;
 
                     //on the backboard hopefully
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(0.3);
-                    backRight.setPower(0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(0.3*voltageconstant);
+                    backRight.setPower(0.3*voltageconstant);
                     claw.setPosition(0.9);
                     sleep(1250);
                     frontLeft.setPower(0);
@@ -239,20 +245,20 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
-                    frontLeft.setPower(0.4);
-                    backLeft.setPower(-0.4);
-                    frontRight.setPower(-0.4);
-                    backRight.setPower(0.4);
+                    frontLeft.setPower(0.4*voltageconstant);
+                    backLeft.setPower(-0.4*voltageconstant);
+                    frontRight.setPower(-0.4*voltageconstant);
+                    backRight.setPower(0.4*voltageconstant);
                     sleep(400);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
-                    frontLeft.setPower(-0.45);
-                    backLeft.setPower(-0.45);
-                    frontRight.setPower(-0.45);
-                    backRight.setPower(-0.45);
+                    frontLeft.setPower(-0.45*voltageconstant);
+                    backLeft.setPower(-0.45*voltageconstant);
+                    frontRight.setPower(-0.45*voltageconstant);
+                    backRight.setPower(-0.45*voltageconstant);
 
                     sleep(1250);
                     frontLeft.setPower(0);
@@ -273,15 +279,15 @@ public class rightRed extends LinearOpMode {
                     sleep(800);
 
 
-                    frontLeft.setPower(-0.4);
-                    backLeft.setPower(0.4);
-                    frontRight.setPower(0.4);
-                    backRight.setPower(-0.4);
+                    frontLeft.setPower(-0.4*voltageconstant);
+                    backLeft.setPower(0.4*voltageconstant);
+                    frontRight.setPower(0.4*voltageconstant);
+                    backRight.setPower(-0.4*voltageconstant);
                     sleep(1400);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(-0.3*voltageconstant);
+                    backRight.setPower(-0.3*voltageconstant);
                     sleep(800);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -292,20 +298,20 @@ public class rightRed extends LinearOpMode {
 
                 }
                 else if (initialPropPos==3){
-                    frontLeft.setPower(0.6);
-                    backLeft.setPower(-0.6);
-                    frontRight.setPower(-0.6);
-                    backRight.setPower(0.6);
+                    frontLeft.setPower(0.6*voltageconstant);
+                    backLeft.setPower(-0.6*voltageconstant);
+                    frontRight.setPower(-0.6*voltageconstant);
+                    backRight.setPower(0.6*voltageconstant);
                     sleep(800);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
-                    frontLeft.setPower(0.65);
-                    backLeft.setPower(0.65);
-                    frontRight.setPower(0.65);
-                    backRight.setPower(0.65);
+                    frontLeft.setPower(0.65*voltageconstant);
+                    backLeft.setPower(0.65*voltageconstant);
+                    frontRight.setPower(0.65*voltageconstant);
+                    backRight.setPower(0.65*voltageconstant);
                     sleep(600);
                     claw.setPosition(0.6);
                     frontLeft.setPower(0);
@@ -313,10 +319,10 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(600);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(-0.3*voltageconstant);
+                    backRight.setPower(-0.3*voltageconstant);
                     sleep(400);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
@@ -325,10 +331,10 @@ public class rightRed extends LinearOpMode {
                     done = true;
 
                     //on the backboard hopefully
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(0.3);
-                    backRight.setPower(0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(0.3*voltageconstant);
+                    backRight.setPower(0.3*voltageconstant);
                     claw.setPosition(0.9);
                     sleep(1100);
                     frontLeft.setPower(0);
@@ -336,20 +342,20 @@ public class rightRed extends LinearOpMode {
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(300);
-                    frontLeft.setPower(0.4);
-                    backLeft.setPower(-0.4);
-                    frontRight.setPower(-0.4);
-                    backRight.setPower(0.4);
+                    frontLeft.setPower(0.4*voltageconstant);
+                    backLeft.setPower(-0.4*voltageconstant);
+                    frontRight.setPower(-0.4*voltageconstant);
+                    backRight.setPower(0.4*voltageconstant);
                     sleep(100);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);
                     frontRight.setPower(0);
                     backRight.setPower(0);
                     sleep(200);
-                    frontLeft.setPower(-0.45);
-                    backLeft.setPower(-0.45);
-                    frontRight.setPower(-0.45);
-                    backRight.setPower(-0.45);
+                    frontLeft.setPower(-0.45*voltageconstant);
+                    backLeft.setPower(-0.45*voltageconstant);
+                    frontRight.setPower(-0.45*voltageconstant);
+                    backRight.setPower(-0.45*voltageconstant);
 
                     sleep(950);
                     frontLeft.setPower(0);
@@ -368,15 +374,15 @@ public class rightRed extends LinearOpMode {
                     Larm.setPosition(0.04);
                     Rarm.setPosition(0.04);
                     sleep(800);
-                    frontLeft.setPower(-0.4);
-                    backLeft.setPower(0.4);
-                    frontRight.setPower(0.4);
-                    backRight.setPower(-0.4);
+                    frontLeft.setPower(-0.4*voltageconstant);
+                    backLeft.setPower(0.4*voltageconstant);
+                    frontRight.setPower(0.4*voltageconstant);
+                    backRight.setPower(-0.4*voltageconstant);
                     sleep(800);
-                    frontLeft.setPower(-0.3);
-                    backLeft.setPower(-0.3);
-                    frontRight.setPower(-0.3);
-                    backRight.setPower(-0.3);
+                    frontLeft.setPower(-0.3*voltageconstant);
+                    backLeft.setPower(-0.3*voltageconstant);
+                    frontRight.setPower(-0.3*voltageconstant);
+                    backRight.setPower(-0.3*voltageconstant);
                     sleep(800);
                     frontLeft.setPower(0);
                     backLeft.setPower(0);

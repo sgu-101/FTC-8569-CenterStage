@@ -28,7 +28,8 @@ public class leftBlue extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    private Servo claw;
+    private Servo claw, claw2,Larm,Rarm,wrist;
+    private double voltageconstant= 12.5/13.5;
     OpenCvCamera cam = null;
     boolean done = false;
 
