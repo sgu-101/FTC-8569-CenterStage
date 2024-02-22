@@ -50,7 +50,7 @@ public class rightRed extends LinearOpMode {
         wrist = hardwareMap.get(Servo.class,"wrist");
         voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
 
-        voltageconstant= 12.5/voltageSensor.getVoltage();
+        voltageconstant= 12.6/voltageSensor.getVoltage();
 
 
 

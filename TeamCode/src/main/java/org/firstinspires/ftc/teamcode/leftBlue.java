@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.imgproc.Imgproc;
@@ -29,7 +30,8 @@ public class leftBlue extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private Servo claw, claw2,Larm,Rarm,wrist;
-    private double voltageconstant= 12.5/13.5;
+    private VoltageSensor voltageSensor;
+    private double voltageconstant;
     OpenCvCamera cam = null;
     boolean done = false;
 
@@ -42,6 +44,15 @@ public class leftBlue extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotor.class, "FL");
         frontRight = hardwareMap.get(DcMotor.class, "FR");
         claw = hardwareMap.get(Servo.class,"claw1");
+        claw = hardwareMap.get(Servo.class,"claw1");
+        claw2 = hardwareMap.get(Servo.class,"claw2");
+        Larm = hardwareMap.get(Servo.class,"Larm");
+        Rarm = hardwareMap.get(Servo.class,"Rarm");
+        wrist = hardwareMap.get(Servo.class,"wrist");
+        voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
+
+        voltageconstant= 12.6/voltageSensor.getVoltage();
+        Rarm.setDirection(Servo.Direction.REVERSE);
 
 
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
