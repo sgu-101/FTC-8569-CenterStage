@@ -76,14 +76,16 @@ public class DriveNormal extends LinearOpMode {
 
 
             //claw
-            if (gamepad1.right_trigger > 0.2) clawPosition = 1;
-            if (gamepad1.left_trigger > 0.2) clawPosition = 0.7;
+            if (gamepad2.right_trigger > 0.2) {
+                clawPosition = 1;}
+            if (gamepad2.left_trigger > 0.2) {
+                clawPosition = 0.7;}
 
             //slides
-            if (gamepad1.dpad_down){
+            if (gamepad2.dpad_down){
                 LSlides.setPower(0.8);
                 RSlides.setPower(-0.8);
-            } else if (gamepad1.dpad_up){
+            } else if (gamepad2.dpad_up){
                 LSlides.setPower(-0.8);
                 RSlides.setPower(0.8);
             } else {
@@ -97,16 +99,16 @@ public class DriveNormal extends LinearOpMode {
             }
 
             //macro
-            if (gamepad1.right_bumper){
+            if (gamepad2.right_bumper){
                 Larm.setPosition(0.8);
                 Rarm.setPosition(0.8);
                 wristPosition =0.45;
-            } else if (gamepad1.left_bumper) {
+            } else if (gamepad2.left_bumper) {
                 Rarm.setPosition(0.04);
                 Larm.setPosition(0.04);
                 wristPosition = 0.71;
             }
-            if (gamepad1.y){
+            if (gamepad2.y){
                 wristPosition=0.65;
             }
 
