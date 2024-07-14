@@ -60,7 +60,7 @@ public class DriveNormal extends LinearOpMode {
 
         waitForStart();
 
-        clawPosition = 1;
+        clawPosition = 0.4;
         wristPosition = 0.73;
 
         while(opModeIsActive()) {
@@ -77,9 +77,9 @@ public class DriveNormal extends LinearOpMode {
 
             //claw
             if (gamepad2.right_trigger > 0.2) {
-                clawPosition = 1;}
+                clawPosition = 0.6;}
             if (gamepad2.left_trigger > 0.2) {
-                clawPosition = 0.7;}
+                clawPosition = 0;}
 
             //slides
             if (gamepad2.dpad_down){
@@ -95,7 +95,7 @@ public class DriveNormal extends LinearOpMode {
 
             //drone
             if (gamepad1.x) {
-                dronePos -= 0.01;
+                dronePos += 0.01;
             }
 
             //macro
@@ -133,7 +133,7 @@ public class DriveNormal extends LinearOpMode {
 
 
             claw.setPosition(Range.clip(clawPosition-0.1, MIN_POSITION, MAX_POSITION));
-            claw2.setPosition(Range.clip(1-clawPosition, MIN_POSITION, MAX_POSITION));
+            claw2.setPosition(Range.clip(1-clawPosition-0.1, MIN_POSITION, MAX_POSITION));
             drone.setPosition(Range.clip(dronePos, MIN_POSITION,MAX_POSITION));
             wrist.setPosition(Range.clip(wristPosition, MIN_POSITION, MAX_POSITION));
             //arm2.setPower(-contPower);
