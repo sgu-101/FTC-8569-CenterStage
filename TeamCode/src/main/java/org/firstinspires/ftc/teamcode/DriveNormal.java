@@ -44,7 +44,7 @@ public class DriveNormal extends LinearOpMode {
         FR.setDirection(DcMotorEx.Direction.FORWARD);
         BR.setDirection(DcMotorEx.Direction.FORWARD);
         double speedDivide = 1;
-        double clawPosition;
+        double clawPosition, claw2Position, clawvar, claw2var;
         double wristPosition;
         BL.setDirection(DcMotorEx.Direction.REVERSE);//switched from BR TO BL
         FL.setDirection(DcMotorEx.Direction.REVERSE);//switched from FR TO FL
@@ -60,8 +60,11 @@ public class DriveNormal extends LinearOpMode {
 
         waitForStart();
 
-        clawPosition = 0.4;
+        clawPosition = 0.16;
+        claw2Position = 0.16;
         wristPosition = 0.73;
+        clawvar = 0;
+        claw2var = 0;
 
         while(opModeIsActive()) {
             double y = 0.8*(Math.pow(-gamepad1.left_stick_y,2))*Math.signum(-gamepad1.left_stick_y); //y value is inverted
@@ -77,9 +80,12 @@ public class DriveNormal extends LinearOpMode {
 
             //claw
             if (gamepad2.right_trigger > 0.2) {
-                clawPosition = 0.6;}
+                clawPosition = 0.195;
+                claw2Position = 0.2;}
             if (gamepad2.left_trigger > 0.2) {
-                clawPosition = 0;}
+                clawPosition = 0;
+                claw2Position = 0;}
+
 
             //slides
             if (gamepad2.dpad_down){
@@ -108,6 +114,7 @@ public class DriveNormal extends LinearOpMode {
                 Larm.setPosition(0.04);
                 wristPosition = 0.71;
             }
+
             if (gamepad2.y){
                 wristPosition=0.65;
             }
@@ -132,8 +139,8 @@ public class DriveNormal extends LinearOpMode {
             BR.setPower(BRP);
 
 
-            claw.setPosition(Range.clip(clawPosition-0.1, MIN_POSITION, MAX_POSITION));
-            claw2.setPosition(Range.clip(1-clawPosition-0.1, MIN_POSITION, MAX_POSITION));
+            claw.setPosition(Range.clip(clawPosition, MIN_POSITION, MAX_POSITION));
+            claw2.setPosition(Range.clip(1-clawPosition, MIN_POSITION, MAX_POSITION));
             drone.setPosition(Range.clip(dronePos, MIN_POSITION,MAX_POSITION));
             wrist.setPosition(Range.clip(wristPosition, MIN_POSITION, MAX_POSITION));
             //arm2.setPower(-contPower);
@@ -144,6 +151,8 @@ public class DriveNormal extends LinearOpMode {
             telemetry.addData("etime",eTime.time());
             telemetry.addData("Rslides",RSlides.getCurrentPosition());
             telemetry.addData("LSlides",LSlides.getCurrentPosition());
+            telemetry.addData("clawvar",clawvar);
+            telemetry.addData("claw2var",claw2var);
 
             telemetry.update();
         }
