@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import java.util.concurrent.TimeUnit;
 
 @TeleOp
 public class DriveNormal extends LinearOpMode {
@@ -41,11 +42,12 @@ public class DriveNormal extends LinearOpMode {
         //axax = hardwareMap.get(CRServo.class,"x");
 
         double dronePos =0.65;
+        double armPos=0.04;
         FR.setDirection(DcMotorEx.Direction.FORWARD);
         BR.setDirection(DcMotorEx.Direction.FORWARD);
         double speedDivide = 1;
         double clawPosition, claw2Position, clawvar, claw2var;
-        double wristPosition;
+        double wristPosition=0;
         BL.setDirection(DcMotorEx.Direction.REVERSE);//switched from BR TO BL
         FL.setDirection(DcMotorEx.Direction.REVERSE);//switched from FR TO FL
         Rarm.setDirection(Servo.Direction.REVERSE);
@@ -80,7 +82,7 @@ public class DriveNormal extends LinearOpMode {
 
             //claw
             if (gamepad2.right_trigger > 0.2) {
-                clawPosition = 0.195;
+                clawPosition = 0.17;
                 claw2Position = 0.2;}
             if (gamepad2.left_trigger > 0.2) {
                 clawPosition = 0;
@@ -101,19 +103,34 @@ public class DriveNormal extends LinearOpMode {
 
             //drone
             if (gamepad1.x) {
-                dronePos += 0.01;
+                drone.setPosition(1);
             }
 
             //macro
-            if (gamepad2.right_bumper){
-                Larm.setPosition(0.8);
-                Rarm.setPosition(0.8);
-                wristPosition =0.45;
-            } else if (gamepad2.left_bumper) {
-                Rarm.setPosition(0.04);
-                Larm.setPosition(0.04);
-                wristPosition = 0.71;
+            if (gamepad2.right_bumper) {
+                armPos += 0.005;
+                wristPosition-=0.005;
+                if(wristPosition<0.45)  {
+                    wristPosition = 0.45;
+                }
+                if (armPos > 0.8) {
+                    armPos = 0.8;
+                }
             }
+
+            if (gamepad2.left_bumper) {
+                armPos -= 0.005;
+                wristPosition+=0.005;
+                if(wristPosition>0.71)  {
+                    wristPosition = 0.71;
+                }
+                if (armPos < 0.04) {
+                    armPos = 0.04;
+                    wristPosition = 0.71;
+                }
+            }
+            Larm.setPosition(armPos);
+            Rarm.setPosition(armPos);
 
             if (gamepad2.y){
                 wristPosition=0.65;
@@ -140,8 +157,7 @@ public class DriveNormal extends LinearOpMode {
 
 
             claw.setPosition(Range.clip(clawPosition, MIN_POSITION, MAX_POSITION));
-            claw2.setPosition(Range.clip(1-clawPosition, MIN_POSITION, MAX_POSITION));
-            drone.setPosition(Range.clip(dronePos, MIN_POSITION,MAX_POSITION));
+            claw2.setPosition(Range.clip(1-claw2Position, MIN_POSITION, MAX_POSITION));
             wrist.setPosition(Range.clip(wristPosition, MIN_POSITION, MAX_POSITION));
             //arm2.setPower(-contPower);
 
@@ -153,6 +169,7 @@ public class DriveNormal extends LinearOpMode {
             telemetry.addData("LSlides",LSlides.getCurrentPosition());
             telemetry.addData("clawvar",clawvar);
             telemetry.addData("claw2var",claw2var);
+            telemetry.addData("armPos",armPos);
 
             telemetry.update();
         }
