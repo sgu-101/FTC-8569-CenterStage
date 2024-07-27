@@ -44,11 +44,12 @@ public class Autonomus extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
-        frontLeft.setPower(0.45);
-        backLeft.setPower(0.45);
-        frontRight.setPower(0.45);
-        backRight.setPower(0.45);
-        sleep(700);
+        frontLeft.setPower(0.6);
+        backLeft.setPower(0.6);
+        frontRight.setPower(0.6);
+        backRight.setPower(0.6);
+        sleep(1000);
+        /*
         frontLeft.setPower(0);
         backLeft.setPower(0);
         frontRight.setPower(0);
@@ -73,7 +74,7 @@ public class Autonomus extends LinearOpMode {
         backLeft.setPower(0);
         frontRight.setPower(0);
         backRight.setPower(0);
-
+        */
 
 
     }

@@ -87,8 +87,13 @@ public class FieldDrive extends LinearOpMode {
             double backLeftPower = (rotY - rotX + rx) / denominator;
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
-
-            double speed = 0.66;
+            double speed = 0.8;
+            if (gamepad1.right_trigger>0.2){
+                speed=1;
+            }
+            else{
+                speed=0.8;
+            }
 
             frontLeftMotor.setPower(frontLeftPower*speed);
             backLeftMotor.setPower(backLeftPower*speed);
